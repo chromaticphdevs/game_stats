@@ -4,20 +4,20 @@
 	##             THIRD-PARTY APPS                ##
     #################################################
 
-    define('DEFAULT_REPLY_TO' , 'donotreply@corefounders.com');
+    define('DEFAULT_REPLY_TO' , '');
 
     const MAILER_AUTH = [
-        'username' => 'donotreply@corefounders.com',
-        'password' => '$a%*2wPWJ+B{',
-        'host'     => 'corefounders.com',
-        'name'     => 'corefounders',
-        'replyTo'  => 'donotreply@corefounders.com',
-        'replyToName' => 'corefounders'
+        // 'username' => '',
+        // 'password' => '',
+        // 'host'     => '',
+        // 'name'     => '',
+        // 'replyTo'  => '',
+        // 'replyToName' => ''
     ];
 
     const ITEXMO = [
-        'key' => 'ST-MARKA387451_MMZLK',
-        'pwd' => '6b9nxyynwt'
+        'key' => '',
+        'pwd' => ''
     ];
 
     #################################################
