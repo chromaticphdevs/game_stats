@@ -1,12 +1,20 @@
 <?php
 	
-	require_once LIBS.DS.'riot/vendor/autoload.php';
+	load(['TraitAPIService'] , APPROOT.DS.'trait');
 
 	class LeagueModel extends Model
 	{
+		use TraitAPIService;
+
 		private $_apiKey = null;
 
 		public $table = 'league_of_legends'; 
+
+		private $_matches = null;
+
+		private $_champions = null;
+
+		public $image_link = 'http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/';
 
 		public function __construct()
 		{
@@ -17,11 +25,44 @@
 			}
 		}
 
-		public function getChampion($champion)
+		public function getChampion($championId)
 		{
-			
+			$avatar = $this->apiGet('https://ddragon.leagueoflegends.com/cdn/11.21.1/data/en_US/champion/'.$championId.'.json' );
+            return $avatar->data ?? null;
 		}
 
+		public function getChampions($pickFields = [] , $isObject = false)
+		{
+			if( is_null($this->_champions) ){
+				$champions = $this->apiGet('http://ddragon.leagueoflegends.com/cdn/11.21.1/data/en_US/champion.json');
+				$this->_champions = $champions->data ?? [];
+			}
+
+			if( !empty($pickFields) )
+			{
+				$champions = $this->_champions;
+
+				$retVal = []; //new values
+
+				foreach($this->_champions as $champions) 
+				{
+					$row = [];
+
+					foreach(array_values($pickFields) as $key) {
+						$row[$key] = $champions->$key;
+					}
+
+					if( $isObject )
+						$row = (object) $row;
+
+					array_push($retVal , $row);
+				}
+
+				return $retVal;
+			}
+
+			return $this->_champions;
+		}
 
 		public function getMatches()
 		{
@@ -40,6 +81,8 @@
 					'info'     => $info
 				]);
 			}
+			if( is_null($this->_matches))
+				$this->_matches = $retVal;
 
 			return $retVal;
 		}
@@ -87,8 +130,187 @@
 			}
 		}
 
-		public function collectMatches()
+		public function getMatchesSummary()
+		{
+			$matches = $this->getMatches();
+
+			$matches = $this->formatDatasForMostUsed($matches);
+
+			$matchesWinAndLosesPerMatch = $this->calcHeroesWinsAndLosesPerMatch($matches);
+
+			$matchesWinAndLosesRate = $this->calcWinRateLoseRate($matchesWinAndLosesPerMatch);
+
+			$matchesWinAndLosesRateWithPickRate = $this->appendPickRate($matchesWinAndLosesRate);
+
+			return $matchesWinAndLosesRateWithPickRate;
+		}
+
+		public function formatDatasForMostUsed($games)
+		{
+			$retVal = [];
+
+			foreach($games as $game) 
+			{
+				$participants = $game->info->participants;
+				
+				foreach($participants as $participant)
+				{
+					$row = [];
+
+					$row['championName'] = $participant->championName;
+					$row['championId'] = $participant->championId;
+					$row['win'] = $participant->win;
+
+					$retVal[] = (object) $row;
+				}
+			}
+			
+			return $retVal;
+		}
+
+
+		/**
+		 * DEFAULTS TO TOP 5
+		 */
+		public function fetchTopChampions($champions , $limit = 5 , $completeDetails = false)
+		{
+			$champions = $this->sortPickRate($champions);
+
+			$champions = array_slice($champions , 0 , $limit);
+
+			foreach($champions as $championName => $champion)
+			{
+				if( $completeDetails ) {
+					$heroDetail = $this->getChampion($championName);
+					$champion->hero_detail = $heroDetail;
+				}
+			}
+
+			return $champions;
+		}
+
+		public function appendChampionDetailComplete($championsWithGames)
+		{
+			$champions = $this->getChampions();
+			$championNames = array_keys($championsWithGames);
+
+			foreach($championNames as $name) 
+			{
+				$name = trim($name);
+
+				$row = $championsWithGames[$name];
+
+				$row->stats = $champions->$name->stats;
+				$row->tags  = $champions->$name->tags;
+				
+				$championsWithGames[$name] = $row;
+			}
+
+			return $championsWithGames;
+		}
+
+		public function sortPickRate($matches)
+		{
+			$pickRate = array_column((array) $matches, 'pickRate');
+
+			array_multisort($pickRate, SORT_DESC , $matches);
+
+			return $matches;
+		}
+
+		public function appendPickRate($championsMatchesSummary)
 		{
 
+			$totalMatches = count($this->_matches);
+
+			$totalPickRate = 0;
+
+
+			foreach($championsMatchesSummary as $championName => $champion)
+			{
+				$totalPicks = $champion->winLoseRate->total;
+				$pickRate = ($totalPicks / $totalMatches) * 10;
+				$champion->pickRate = $pickRate;
+
+				$totalPickRate += $pickRate;
+				// if( isEqual($championName , 'Lucian'))
+				// dump([
+				// 	$totalMatches,
+				// 	$championName,
+				// 	$champion,
+				// 	$champion->pickRate
+				// ]);
+
+				$championsMatchesSummary[$championName] = $champion;
+			}
+
+			return $championsMatchesSummary;
+		}
+
+		public function calcHeroesWinsAndLosesPerMatch($matches)
+		{
+			$retVal = [];
+
+			$championsMatchesWinsAndLoses = [];
+
+			foreach($matches as $match)
+			{
+				if( !isset($championsMatchesWinsAndLoses[$match->championName]) ){
+					$championsMatchesWinsAndLoses[$match->championName] = [];
+				}else{
+					$winLose = boolval($match->win);
+					array_push($championsMatchesWinsAndLoses[$match->championName] , $winLose);
+				}
+			}
+
+
+			foreach($championsMatchesWinsAndLoses as $key => $games)
+			{
+				$retVal[$key] = (object)[
+					'matches' => $games
+				];
+			}
+
+			return $retVal;
+		}
+
+		/**
+		 * returns minimal set of datas
+		 * info only
+		 */
+		public function calcWinRateLoseRate($championsWithGames)
+		{
+			foreach($championsWithGames as $championName => $championProps)
+			{
+				if( is_null($championProps) ) continue;
+
+				$loseRate = 0;
+				$winRate = 0;
+				$matches = $championProps->matches;
+
+				foreach($matches as $win) {
+					if( $win ){
+						$winRate++;
+					}else{
+						$loseRate++;
+					}
+				}
+
+				$totalMatches = count($matches);
+
+				if( $winRate )
+					$winRate = round(($winRate / $totalMatches) * 100 , 2);
+
+				if($loseRate)
+					$loseRate = round(($loseRate / $totalMatches) * 100 , 2);
+
+				$championsWithGames[$championName]->winLoseRate = (object) [
+					'win' => $winRate,
+					'lose' => $loseRate,
+					'total' => $totalMatches
+				];
+			}
+
+			return $championsWithGames;
 		}
 	}

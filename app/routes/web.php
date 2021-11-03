@@ -21,5 +21,20 @@
 		'index' => $controller.'/index',
 		'show'  => $controller.'/show'
 	];
+
+	$controller = '/LeagueController';
+
+	$routes['league'] = [
+		'index' => $controller .'/index',
+		'show'  => $controller .'/show'
+	];
+
+	$controller = '/LeagueBalancerController';
+
+	$routes['leagueBalancer'] = [
+		'index' => $controller .'/index',
+		'show' => $controller .'/show',
+	];
+	
 	return $routes;
 ?>

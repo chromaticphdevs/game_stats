@@ -1,8 +1,9 @@
 <?php
-	require_once APPROOT.DS.'trait/TraitLeaugeBalancer.php';
+	load(['TraitRevamp' , 'TraitLeagueBalancer'] , APPROOT.DS.'trait');
 
 	class LeagueBalancerModel extends Model
 	{
+		use TraitRevamp;
 		use TraitLeagueBalancer;
 
 		private $_leagueModel = null;
@@ -16,151 +17,37 @@
 			if( is_null($this->_leagueModel) )
 				$this->_leagueModel = model('LeagueModel');
 		}
+
 		/*
 		*get apis from database
 		*/
-		public function getChampionSummaries()
+
+		public function balanceChampions($champions)
 		{
-			$matches = $this->getMatches();
-			$matchesSummary = $this->calculatePickRateLoseRateWinRate($matches);
+			$retVal = [];
 
-			return $this->sortPickRate($matchesSummary);
-		}
-
-
-		public function topFive()
-		{
-
-			$avatarSummaries = $this->getChampionSummaries();
-
-			if( is_null($this->_leagueAvatarModel) )
-				$this->_leagueAvatarModel = model('LolAvatarModel');
-
-			$avatarSummaries = array_slice($avatarSummaries , 0 , 10);
-
-			foreach($avatarSummaries as $key=> $avatar) 
+			/**
+			 * RETURN ONLY
+			 * STATS
+			 * WINRATELOSERATE
+			 * PICKRATE
+			 * STATBALANCE
+			 */
+			foreach($champions as $key => $champ)
 			{
-				$heroDetail = $this->_leagueAvatarModel->getAvatar($avatar['avatarName']);
+				$champMinimizeData = (object)[
+					'pickRate' => $champ->pickRate,
+					'winLoseRate' => $champ->winLoseRate,
+					'stats'  => $champ->stats,
+					'championName' => $key,
+					'tags'         => $champ->tags
+				];
 
-				try
-				{
-					$avatarName = $avatar['avatarName'];
-					$heroBalanced = $this->applyBalance($heroDetail->$avatarName);
-
-					$avatarSummaries[$key]['hero_detail'] = $heroDetail;
-					$avatarSummaries[$key]['balance'] = $heroBalanced;
-
-				}catch(Exception $e)
-				{
-					dd([
-						$e->getMessage(),
-						$heroBalanced
-					]);
-				}
+				array_push($retVal , $this->applyBalance($champMinimizeData));
 			}
 
-			return $avatarSummaries;
-		}
+			$avatars = $this->revamp($retVal);
 
-		public function calculateWinRate($matchesSummary = [])
-		{
-
-		}
-
-		public function sortPickRate($matches)
-		{
-			$pickRate = array_column($matches, 'pickRate');
-
-			array_multisort($pickRate, SORT_DESC , $matches);
-
-			return $matches;
-		}
-
-		public function computePickrate(& $matches = [])
-		{
-			$totalMatches = count($this->_matches);
-
-			foreach($matches as $key => $match) 
-			{
-				if(!isset($match['totalMatches'])){
-					echo die("Must have total matches key with int value");
-				}
-
-				$matches[$key]['pickRate'] = (($match['totalMatches'] / $totalMatches) * 10);
-			}
-
-			return $matches;
-		}
-
-
-		public function calculatePickRateLoseRateWinRate($games)
-		{
-			//store heroes here.
-			$championsSummary = [];
-
-			foreach($games as $game) 
-			{
-
-				$info = $game->info ?? null;
-
-				if( !isset($info) )
-					continue; //skip the game
-
-				$participants = $info->participants;
-
-				foreach($participants as $participant)
-				{
-					if( !isset($championsSummary[$participant->championName]) )
-						$championsSummary[$participant->championName] = [];
-
-					$winLose = boolval($participant->win);
-
-					array_push($championsSummary[$participant->championName], $winLose);
-				}
-			}
-
-
-			//get winrate
-
-			$championsSummaryWithWinLosePickrate = [];
-
-			foreach($championsSummary as $key => $championSummary) 
-			{
-
-				$loseRate = 0;
-				$winRate = 0;
-
-				$matchesResult = array_values($championSummary);
-
-				foreach($matchesResult as $result) {
-					if( $result ){
-						$winRate++;
-					}else{
-						$loseRate++;
-					}
-				}
-
-				$totalMatches = count($matchesResult);
-				$winRate = round(($winRate / $totalMatches) * 100 , 2);
-				$loseRate = round(($loseRate / $totalMatches) * 100 , 2);
-
-				array_push($championsSummaryWithWinLosePickrate , [
-					'totalMatches' => $totalMatches,
-					'winRate' => $winRate,
-					'loseRate' => $loseRate,
-					'avatarName'   => $key
-				]);
-
-			}
-
-			return $this->computePickrate($championsSummaryWithWinLosePickrate);
-		}
-
-		public function getMatches()
-		{
-			if( is_null($this->_matches) )
-				$this->_matches = $this->_leagueModel->getMatches();
-
-			return $this->_matches;
+			return $avatars;
 		}
 	}

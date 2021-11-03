@@ -22,9 +22,7 @@
                         <p class="card-text">
                         League of Legends, commonly referred to as League, is a 2009 multiplayer online battle arena video game developed and published by Riot Games
                         </p>
-                        <a href="<?php echo _route('avatar:index' , [
-                            'module' => GAMES_LOL,
-                        ])?>" class="btn btn-primary">Explore More</a>
+                        <a href="<?php echo _route('league:index')?>" class="btn btn-primary">Explore More</a>
                     </div>
                 </div>
             </div>

@@ -285,3 +285,37 @@
 
 		return $arrayOfObjects;
 	}
+
+    function G_PickDataFromArray($datas , $collectTheseKeysOnly = [] , $returnType = 'object')
+    {
+        $retVal = [];
+
+        foreach($datas as $data) {
+            $retVal [] = G_FormatData($data, $collectTheseKeysOnly , $returnType);
+        }
+
+        return $retVal;
+    }
+    function G_FormatData( $data , $collectTheseKeysOnly = [] , $returnType = 'object' )
+    {
+        $retVal = [];
+        $collectOnly = array_values($collectTheseKeysOnly);
+
+        $isObject = is_object($data);
+
+        foreach( $collectOnly as $key )
+        {
+            if( $isObject )
+            {
+                $retVal[$key] = $data->$key;
+                
+            }elseif(is_array($data)) {
+                $retVal[$key] = $data[$key];
+            }
+        }
+
+        if( isEqual($returnType , 'object') )
+            return json_decode(json_encode($retVal));
+
+        return $retVal;
+    }
