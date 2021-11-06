@@ -41,6 +41,7 @@
 				$winRateNinetyPercent = $winRate > floatval(90);
 
 				$pickRateHigherSeventy = $pickRateComparison > 70;
+				$winRateOverFourty = $winRate > floatval(40);
 
 				// dump([
 				// 	$avatar,
@@ -51,20 +52,23 @@
 				// ]);
 
 				//for nerf
-				if( ($pickRateHigherSeventy && $winrateFourtyPercent)  || $winRateNinetyPercent)
+				if( ($pickRateHigherSeventy && $winrateFourtyPercent)  || $winRateNinetyPercent || $winRateOverFourty)
 				{
 					$revampParam = (object) [
 						'stats' => $this->nerf($avatar->stats , $avatar->changes),
 						'type'  => 'nerf'
 					];
-				}
-
-				//for buff
-				if(($winRateFiftyPercent && $pickRateLessSenventyPercent) || 
-				($pickRateLessTwentyPercent && $winRateEightyPercent)){
+				}else if(($winRateFiftyPercent && $pickRateLessSenventyPercent) || 
+				($pickRateLessTwentyPercent && $winRateEightyPercent))
+				{
 					$revampParam = (object) [
 						'stats' => $this->buff($avatar->stats , $avatar->changes),
 						'type'  => 'buff'
+					];
+				}else{
+					$revampParam = (object) [
+						'stats' => $avatar->stats,
+						'type'  => 'No Changes'
 					];
 				}
 

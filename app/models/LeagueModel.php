@@ -221,29 +221,20 @@
 		public function appendPickRate($championsMatchesSummary)
 		{
 
-			$totalMatches = count($this->_matches);
+			$totalMatches = 0;
 
-			$totalPickRate = 0;
-
-
+			foreach($championsMatchesSummary as $champion) 
+			{
+				$totalMatches += $champion->winLoseRate->total;
+			}
 			foreach($championsMatchesSummary as $championName => $champion)
 			{
 				$totalPicks = $champion->winLoseRate->total;
-				$pickRate = ($totalPicks / $totalMatches) * 10;
+				$pickRate = ($totalPicks / $totalMatches) * 100;
 				$champion->pickRate = $pickRate;
-
-				$totalPickRate += $pickRate;
-				// if( isEqual($championName , 'Lucian'))
-				// dump([
-				// 	$totalMatches,
-				// 	$championName,
-				// 	$champion,
-				// 	$champion->pickRate
-				// ]);
-
+				
 				$championsMatchesSummary[$championName] = $champion;
 			}
-
 			return $championsMatchesSummary;
 		}
 
@@ -255,12 +246,11 @@
 
 			foreach($matches as $match)
 			{
-				if( !isset($championsMatchesWinsAndLoses[$match->championName]) ){
+				if( !isset($championsMatchesWinsAndLoses[$match->championName]) )
 					$championsMatchesWinsAndLoses[$match->championName] = [];
-				}else{
-					$winLose = boolval($match->win);
-					array_push($championsMatchesWinsAndLoses[$match->championName] , $winLose);
-				}
+
+				$winLose = boolval($match->win);
+				array_push($championsMatchesWinsAndLoses[$match->championName] , $winLose);
 			}
 
 
