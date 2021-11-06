@@ -29,11 +29,32 @@
 		'show'  => $controller .'/show'
 	];
 
+	$controller = '/DotaController';
+
+	$routes['dota'] = [
+		'index' => $controller .'/index',
+		'show'  => $controller .'/show'
+	];
+
+	$controller = '/DotaBalancerController';
+
+	$routes['dotaBalancer'] = [
+		'index' => $controller .'/index',
+		'show'  => $controller .'/show'
+	];
+
+
 	$controller = '/LeagueBalancerController';
 
 	$routes['leagueBalancer'] = [
 		'index' => $controller .'/index',
 		'show' => $controller .'/show',
+	];
+
+	$controller = '/ApiKeyController';
+
+	$routes['api'] = [
+		'edit' => $controller .'/edit',
 	];
 	
 	return $routes;

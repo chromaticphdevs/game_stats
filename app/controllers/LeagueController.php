@@ -11,15 +11,16 @@
         {
             $matchesSummaries = $this->league->getMatchesSummary();
 
-            // $champions = $this->league->getChampions([
-            //     'name',
-            //     'title',
-            //     'tags',
-            // ],true);
+            $champions = $this->league->getChampions([
+                'name',
+                'title',
+                'tags',
+            ],true);
 
             $data = [
                 'topFivePopular' => $this->league->fetchTopChampions($matchesSummaries , 5),
-                'imageSrc'   => $this->league->image_link
+                'imageSrc'   => $this->league->image_link,
+                'champions'  => $champions
             ];
 
             return $this->view('lol/index' , $data);

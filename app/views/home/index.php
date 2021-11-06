@@ -9,7 +9,7 @@
                         <p class="card-text">
                             Dota 2 is a multiplayer online battle arena (MOBA) video game developed and published by Valve
                         </p>
-                        <a href="#" class="btn btn-primary">Explore More</a>
+                        <a href="<?php echo _route('dota:index')?>" class="btn btn-primary">Explore More</a>
                     </div>
                 </div>
             </div>
