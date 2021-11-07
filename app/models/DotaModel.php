@@ -44,10 +44,12 @@
 
 			return $retVal;
 		}
+
+
 		public function heroesAppendImageUrl( $hero_name = null)
 		{
 			$retVal = [];
-
+			
 			$heroes = $this->getHeroes( $hero_name ); 
 
 			foreach($heroes as $key => $hero) 
@@ -362,21 +364,14 @@
 
 			$matchesSummary = array_slice($matchesSummary , 0 , $limit);
 
-			foreach($matchesSummary as $heroId => $hero)
-			{
-				if( $completeDetails ) {
-					$heroDetail = $this->getLocalizeHeroes(['id' , $heroId]);
-					$hero->hero_detail = $heroDetail;
-				}
-			}
-
 			return $matchesSummary;
 		}
 
 
-		public function getHeroesComplete()
+		public function getHeroesComplete( $limit = null)
 		{
 			$matches = $this->getMatches();
+
 
 			$matches = $this->formatDatasForMostUsed($matches);
 
@@ -385,6 +380,9 @@
 			$matches = $this->calcWinRateLoseRate($matches);
 
 			$matches = $this->appendPickRate($matches);
+
+			if( !is_null($limit))
+				$matches = $this->fetchTopChampions($matches , $limit);
 
 			return $matches;
 		}

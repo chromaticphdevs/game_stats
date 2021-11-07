@@ -20,9 +20,13 @@
     function wWrapSpan($text)
     {
         $retVal = '';
-
-        if(is_array($text)){
-            foreach($text as $t) {
+        
+        if(is_array($text))
+        {
+            foreach($text as $key => $t) 
+            {
+                if( $key > 3 )
+                    $classHide = '';
                 $retVal .= "<span class='badge badge-primary badge-classic'> {$t} </span>";
             }
         }else{
@@ -33,3 +37,10 @@
     }
 
     
+
+    function wDivider()
+    {
+        return <<<EOF
+            <div style="margin-top:30px"> </div>
+        EOF;
+    }

@@ -2,6 +2,12 @@
 	
 	$routes = [];
 
+	$controller = '/HomeController';
+
+	$routes['home'] = [
+		'index' => $controller.'/index'
+	];
+
 	$controller = '/TopTenController';
 
 	$routes['topTen'] = [
@@ -43,6 +49,14 @@
 		'show'  => $controller .'/show'
 	];
 
+
+	$controller = '/LoginController';
+
+	$routes['login'] = [
+		'action' => $controller.'/loginAction',
+		'index'  => $controller.'/index',
+		'destroy'  => $controller.'/destroy',
+	];
 
 	$controller = '/LeagueBalancerController';
 

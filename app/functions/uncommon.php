@@ -9,6 +9,14 @@
         return false;
     }  
 
+    //temporary
+    function authSet($data)
+    {
+        Session::set('auth' , $data);
+
+        return true;
+    }
+
     function whoIs($prop = null)
 	{
         $user = Session::get('auth');
