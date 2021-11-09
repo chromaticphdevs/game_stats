@@ -70,6 +70,22 @@
 	$routes['api'] = [
 		'edit' => $controller .'/edit',
 	];
-	
+		
+
+	$controller = '/MobileLegendController';
+
+	$routes['mobile'] = [
+		'show' => $controller.'/show',
+		'index' => $controller.'/index'
+	];
+
+
+	$controller = '/MobileLegendBalancerController';
+
+	$routes['mobileBalancer'] = [
+		'index' => $controller.'/index'
+	];
+
+
 	return $routes;
 ?>

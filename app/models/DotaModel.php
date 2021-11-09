@@ -106,12 +106,13 @@
 			}
 		}
 
-		public function localizeGames()
+		public function localizeGames( $games = [] )
 		{
 			$endpoint = 'https://api.opendota.com/api/matches';
 
-
-			$games = Module::get('dota')['matchIds'];
+			if( empty($games))
+				$games = Module::get('dota')['matchIds'];
+			
 
 
 			$game_datas = [];
@@ -122,6 +123,8 @@
 
 				if($game_data)
 				{
+					dd($game_data);
+					
 					array_push($game_datas , [
 						'match_id' => $game_data->match_id,
 						'duration' => $game_data->duration,
@@ -139,6 +142,42 @@
 					'info'     => json_encode($game)
 				]);
 			}
+		}
+
+		public function getMatchIdsAndPopulate()
+		{
+			$players = [
+				'111620041',
+				'164532005',
+				'111750003',
+				'340296152'
+			];
+
+			$fetchedGames = 0;
+			$fetchedFromPlayerGames = 0;
+
+			$matchIds = [];
+
+			foreach( $players as $player )
+			{
+				$matches = $this->apiGet("https://api.opendota.com/api/players/{$player}/matches");
+
+				if( $fetchedGames >= 25)
+					break;
+
+				foreach($matches as $match) 
+				{
+					if($fetchedFromPlayerGames >= 25){
+						$fetchedFromPlayerGames = 0;
+						break;
+					}
+
+					array_push($matchIds , $match->match_id);
+					$fetchedGames++;
+				}
+			}
+
+			$this->localizeGames($matchIds);
 		}
 
 		/**

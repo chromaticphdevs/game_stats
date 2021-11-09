@@ -42,15 +42,7 @@
 
 				$pickRateHigherSeventy = $pickRateComparison > 70;
 				$winRateOverFourty = $winRate > floatval(40);
-
-				// dump([
-				// 	$avatar,
-				// 	$pickRate,
-				// 	$mostUsed->pickRate,
-				// 	$pickRateComparison,
-				// 	$pickRateLessTwentyPercent
-				// ]);
-
+				
 				//for nerf
 				if( ($pickRateHigherSeventy && $winrateFourtyPercent)  || $winRateNinetyPercent || $winRateOverFourty)
 				{

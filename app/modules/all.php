@@ -6,7 +6,7 @@
 
     $module['apis'] = [
         'lol' => [
-            'key' => 'RGAPI-ac56c14b-0222-4bbd-9c52-ecb250ccb2e7',
+            'key' => getMLAPI(),
             'secret' => ''
         ]
     ];

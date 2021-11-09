@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <!-- <div class="col-md-4">
+        <div class="col-md-4">
             <div class="card component-card_2">
                 <img src="https://gamerbraves.sgp1.cdn.digitaloceanspaces.com/2020/06/mobile-legends-bang-bang.jpg" class="card-img-top" alt="widget-card-2">
                 <div class="card-body">
@@ -34,10 +34,10 @@
                     <p class="card-text">
                     Mobile Legends: Bang Bang is a mobile multiplayer online battle arena developed and published by Moonton, a subsidiary of ByteDance
                     </p>
-                    <a href="#" class="btn btn-primary">Explore More</a>
+                    <a href="<?php echo _route('mobile:index')?>" class="btn btn-primary">Explore More</a>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <p class="text-center">

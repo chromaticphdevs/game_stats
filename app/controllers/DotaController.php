@@ -13,15 +13,6 @@
 		}
 
 
-		public function migrate()
-		{
-			$this->dotaMigration = model('DotaMigrationModel');
-
-			$heroAbilities = $this->dotaMigration->migrateAbilities();
-
-			dd($heroAbilities);
-		}
-
 		public function index()
 		{
 			$matches = $this->dota->getHeroesComplete();
@@ -58,10 +49,5 @@
 			];
 
 			return $this->view('dota/show' , $data);
-		}
-
-		public function migrateStats()
-		{
-			$this->dota->localizeHeroStats();
 		}
 	}

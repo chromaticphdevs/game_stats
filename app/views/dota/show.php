@@ -16,26 +16,6 @@
                     Attack Type : <?php echo $info->attack_type?>
                 </div>
             </div>
-
-            <?php echo wDivider()?>
-
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Hero Stats</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <td>Pick Rate</td>
-                            <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>Win Rate</td>
-                            <td>30%</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
         </div>
 
         <div class="col-md-7">

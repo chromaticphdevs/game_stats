@@ -5,7 +5,9 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="<?php echo $imgSrc.$champion->name.'.png'?>" alt="">
+                            <img src="<?php echo $imgSrc.$champion->name.'.png'?>" 
+                                alt="<?php echo $champion->name?>"
+                                style="width: 100%;">
                         </div>
                         <div class="col-md-8">
                             <h4 class="card-title"><?php echo $champion->name?></h4>

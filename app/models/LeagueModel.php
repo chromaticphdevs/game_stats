@@ -91,9 +91,13 @@
 		*responsible for pulling matches
 		*into the riot api and storing it to the database
 		*/
-		public function populateMatches()
+		public function populateMatches( $matchIds = [])
 		{
-			$matchIds = Module::get('lol')['matchIds'];
+			$imported_games = 10;
+
+			if(empty($matchIds)){
+				$matchIds = Module::get('lol')['matchIds'];
+			}
 
 			$matches = [];
 
@@ -109,6 +113,11 @@
 				if( $matchData ){
 					$matches[] = $matchData;
 				}
+
+				$imported_games++;
+
+				if($imported_games >= 20)
+					break;
 			}
 
 			foreach($matches as $match) 
