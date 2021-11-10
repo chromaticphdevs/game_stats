@@ -87,5 +87,11 @@
 	];
 
 
+	$controller = '/MatchesController';
+
+	$routes['match'] = [
+		'index' => $controller .'/index'
+	];
+
 	return $routes;
 ?>
