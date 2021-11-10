@@ -7,8 +7,8 @@
 		public function index()
 		{
 
-			// $leagueMatchService = new LeagueMatchService();
-			// $leagueMatchService->populateMatches();
+			$leagueMatchService = new LeagueMatchService();
+			$leagueMatchService->populateMatches();
 
 
 			$dotaMatchService = new DotaMatchService();
