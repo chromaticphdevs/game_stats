@@ -7,3 +7,7 @@ create table users(
 	created_at timestamp default now(),
 	updated_at timestamp default now() ON UPDATE now()
 );
+
+
+insert into users(username , password , display_name)
+	VALUES('game_stat' , '122333'  , 'Game Balancer Admin');

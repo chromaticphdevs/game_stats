@@ -2,6 +2,12 @@
 	
 	$routes = [];
 
+	$controller = '/HomeController';
+
+	$routes['home'] = [
+		'index' => $controller.'/index'
+	];
+
 	$controller = '/TopTenController';
 
 	$routes['topTen'] = [
@@ -44,6 +50,14 @@
 	];
 
 
+	$controller = '/LoginController';
+
+	$routes['login'] = [
+		'action' => $controller.'/loginAction',
+		'index'  => $controller.'/index',
+		'destroy'  => $controller.'/destroy',
+	];
+
 	$controller = '/LeagueBalancerController';
 
 	$routes['leagueBalancer'] = [
@@ -56,6 +70,22 @@
 	$routes['api'] = [
 		'edit' => $controller .'/edit',
 	];
-	
+		
+
+	$controller = '/MobileLegendController';
+
+	$routes['mobile'] = [
+		'show' => $controller.'/show',
+		'index' => $controller.'/index'
+	];
+
+
+	$controller = '/MobileLegendBalancerController';
+
+	$routes['mobileBalancer'] = [
+		'index' => $controller.'/index'
+	];
+
+
 	return $routes;
 ?>

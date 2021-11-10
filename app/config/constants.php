@@ -39,9 +39,9 @@
 
     define('GLOBALS' , APPROOT.DS.'classes/globals');
 
-    define('SITE_NAME' , 'Corefounders.com');
+    define('SITE_NAME' , 'newmeta.digital');
 
-    define('COMPANY_NAME' , 'CORE FOUNDERS');
+    define('COMPANY_NAME' , 'New Meta');
 
     define('KEY_WORDS' , '#############');
 

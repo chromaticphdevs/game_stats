@@ -10,14 +10,13 @@
 
 		public function index()
 		{
-			$dotaHeroMatches = $this->dota->getHeroesComplete();
+			$dotaHeroMatches = $this->dota->getHeroesComplete(10);
 			$dotaHeroMatches = $this->dota->sortPickRate($dotaHeroMatches);
 			$dotaHeroMatches = $this->balancer->balanceHeroes($dotaHeroMatches);
 
 			$data = [
 				'balances' => $dotaHeroMatches
 			];
-
 			return $this->view('dota/balance' , $data);
 		}
 	}

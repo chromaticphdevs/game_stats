@@ -1,20 +1,15 @@
 <div class="topbar-nav header navbar" role="banner">
         <nav id="topbar">
             <ul class="navbar-nav theme-brand flex-row  text-center">
-                <li class="nav-item theme-logo">
-                    <a href="index.html">
-                        <img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">
-                    </a>
-                </li>
                 <li class="nav-item theme-text">
-                    <a href="index.html" class="nav-link"> New Meta </a>
+                    <a href="<?php echo _route('home:index')?>" class="nav-link"> New Meta </a>
                 </li>
             </ul>
 
             <ul class="list-unstyled menu-categories" id="topAccordion">
 
                 <li class="menu single-menu">
-                    <a href="">
+                    <a href="<?php echo _route('home:index')?>">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
@@ -27,7 +22,7 @@
 
 
                 <li class="menu single-menu">
-                    <a href="">
+                    <a href="<?php echo _route('dota:index')?>">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
@@ -39,7 +34,7 @@
                 </li>
 
                 <li class="menu single-menu">
-                    <a href="">
+                    <a href="<?php echo _route('league:index')?>">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
@@ -51,7 +46,7 @@
                 </li>
 
                 <li class="menu single-menu">
-                    <a href="">
+                    <a href="<?php echo _route('mobile:index')?>">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
@@ -61,8 +56,6 @@
                         </div>
                     </a>
                 </li>
-
-
             </ul>
         </nav>
     </div>

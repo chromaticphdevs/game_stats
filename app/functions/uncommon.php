@@ -1,4 +1,16 @@
 <?php
+    function getMLAPI()
+    {
+        $db = Database::getInstance();
+
+        $db->query(
+            "SELECT api_key FROM api_keys
+                where api = 'leauge_of_legends' "
+        );
+
+        return $db->single()->api_key ?? '';
+    }
+
     function isSubmitted()
     {
         $request = $_SERVER['REQUEST_METHOD'];
@@ -8,6 +20,14 @@
 
         return false;
     }  
+
+    //temporary
+    function authSet($data)
+    {
+        Session::set('auth' , $data);
+
+        return true;
+    }
 
     function whoIs($prop = null)
 	{
