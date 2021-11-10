@@ -106,6 +106,9 @@
 			}
 		}
 
+		/*
+		*SAVE GAMES TO DATABASE
+		*/
 		public function localizeGames( $games = [] )
 		{
 			$endpoint = 'https://api.opendota.com/api/matches';
@@ -114,34 +117,63 @@
 				$games = Module::get('dota')['matchIds'];
 			
 
-
 			$game_datas = [];
 
 			foreach($games as $key => $game_id)
 			{
 				$game_data = $this->apiGet( $endpoint.'/'.$game_id );
 
+				$game_data = $this->cleanMatchData($game_data);
 				if($game_data)
-				{
-					dd($game_data);
-					
-					array_push($game_datas , [
-						'match_id' => $game_data->match_id,
-						'duration' => $game_data->duration,
-						'game_mode' => $game_data->game_mode,
-						'picks_bans' => $game_data->picks_bans,
-						'radiant_win' => $game_data->radiant_win
-					]);
-				}
+					array_push($game_datas , $game_data);
 			}
 
-			foreach($game_datas as $game)
+			$this->saveMatches($game_datas);
+		}
+
+		public function cleanMatchData($match)
+		{
+			if(!isset($match->match_id) || 
+				!isset($match->duration) || 
+				!isset($match->game_mode) || 
+				!isset($match->picks_bans) ||
+				!isset($match->radiant_win) )
+				return false;
+
+			$match = [
+				'match_id' => $match->match_id,
+				'duration' => $match->duration,
+				'game_mode' => $match->game_mode,
+				'picks_bans' => $match->picks_bans,
+				'radiant_win' => $match->radiant_win
+			];
+
+			return $match;
+		}
+		public function saveMatches($matches)
+		{
+			$localized_matches = parent::dbgetAssoc('id');
+
+			$matches_ids = [];
+
+			foreach($localized_matches as $match) {
+				array_push($matches_ids , $match->match_id);
+			}
+
+			$isOk = false;
+			foreach($matches as $match)
 			{
-				parent::store([
-					'match_id' => $game['match_id'],
-					'info'     => json_encode($game)
+				$match = $this->cleanMatchData($match);
+
+				if( isEqual($match['match_id'] , $matches_ids) )
+					continue;
+
+				$isOk = parent::store([
+					'match_id' => $match['match_id'],
+					'info'     => json_encode($match)
 				]);
 			}
+			return $isOk;
 		}
 
 		public function getMatchIdsAndPopulate()
@@ -167,13 +199,20 @@
 
 				foreach($matches as $match) 
 				{
-					if($fetchedFromPlayerGames >= 25){
+					dump($match);
+					
+					if($fetchedFromPlayerGames >= 10){
 						$fetchedFromPlayerGames = 0;
 						break;
 					}
+					if( !isset($match->match_id) )
+						continue;
+
+					
 
 					array_push($matchIds , $match->match_id);
 					$fetchedGames++;
+					$fetchedFromPlayerGames++;
 				}
 			}
 

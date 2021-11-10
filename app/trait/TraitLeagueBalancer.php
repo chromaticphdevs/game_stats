@@ -24,9 +24,9 @@
 		{
 			$stats = $hero->stats;
 
-			$hpPerLevel = $stats->hpperlevel * .001;
-			$magicPerLevel = $stats->mpperlevel * .01;
-			$manaPerLevel = $stats->mpregenperlevel * .016;
+			$hpPerLevel = round($stats->hpperlevel * .005 ,2);
+			$magicPerLevel = round($stats->mpperlevel * .20 ,2);
+			$manaPerLevel = round($stats->mpregenperlevel * .015,2);
 
 			$row = (object)[
 				'mpregenperlevel' => $manaPerLevel,
@@ -48,11 +48,11 @@
 		{
 			$stats = $hero->stats;
 
-			$attackDamagePerlevel = $stats->attackdamageperlevel * 0.25;
-			$armorPerLevel = $stats->armorperlevel * .14;
-			$spellBlock    = $stats->spellblock * .05;
-			$hpRegenPerLevel = $stats->hpregenperlevel * .003;
-			$attackSpeedPerLevel = $stats->attackspeedperlevel * .10;
+			$attackDamagePerlevel = round($stats->attackdamageperlevel * 0.25 , 2);
+			$armorPerLevel = round($stats->armorperlevel * .14 , 2);
+			$spellBlock    = round($stats->spellblock * .05 , 2);
+			$hpRegenPerLevel = round($stats->hpregenperlevel * .05 , 2);
+			$attackSpeedPerLevel = round($stats->attackspeedperlevel * .16 , 2);
 
 			$row = (object)[
 				'attackdamageperlevel' => $attackDamagePerlevel,
@@ -75,9 +75,9 @@
 		{
 			$stats = $hero->stats;
 			
-			$critperlevel = $stats->critperlevel * .01;
-			$mpperlevel = $stats->mpperlevel * .012;
-			$movespeed = $stats->movespeed * .01;
+			$critperlevel = round($stats->critperlevel * .10);
+			$mpperlevel = round($stats->mpperlevel * .12 , 2);
+			$movespeed = round($stats->movespeed * .05, 2);
 
 			$row = (object)[
 				'mpregenperlevel' => $critperlevel,
