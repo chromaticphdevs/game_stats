@@ -11,7 +11,7 @@
         public function show($championName)
         {
             $champion = $this->league->getChampion($championName);
-
+            
             $data = [
                 'champion' => $champion->$championName,
                 'imgSrc'   => $this->league->image_link,

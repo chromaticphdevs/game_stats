@@ -1,6 +1,7 @@
 <?php build('content')?>
 	
 	<div class="col-md-5">
+		<?php Flash::show()?>
 		<div class="card">
 			<div class="card-header">
 				<h4 class="card-title">Total Games</h4>
@@ -16,6 +17,11 @@
 						<td><?php echo $matches['league']?></td>
 					</tr>
 				</table>
+			</div>
+
+			<div class="card-footer">
+				
+				<a href="/PopulateGamesController" class="btn btn-primary">Fetch Games</a>
 			</div>
 		</div>
 	</div>

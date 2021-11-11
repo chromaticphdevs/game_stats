@@ -43,7 +43,6 @@
 			if( $match_details )
 			{
 				$league_model = model('LeagueModel');
-
 				$league_model->saveMatches($match_details);
 			}
 
@@ -51,17 +50,38 @@
 
 		public function fetchLeague()
 		{
+			$pages = [1 ,2 ,3 ,4];
+			$rank_sets = [
+				'I',
+				'II',
+				'III',
+				'IV'
+			];
+
+			$random = mt_rand(0, 3);
+
+			$rank = $rank_sets[$random];
+			$page = $pages[$random];
 			/**
 			 * Korean games
 			 * */
-			$endpoint = "https://kr.api.riotgames.com/lol/league/v4/entries/RANKED_SOLO_5x5/DIAMOND/IV?page=1&api_key={$this->_key}";
+			$endpoint = "https://kr.api.riotgames.com/lol/league/v4/entries/RANKED_SOLO_5x5/DIAMOND/{$rank}?page={$page}&api_key={$this->_key}";
+			
+			try{
+				$league = $this->apiGet($endpoint);
 
-			$league = $this->apiGet($endpoint);
+				if(!$league && !isset($league[0]))
+					return false;
 
-			if(!$league)
-				return false;
-
-			return $league[0];//first instance
+				return $league[0];//first instance
+			}catch(Exception $e)
+			{
+				dump([
+					$e->getMessage(),
+					'LEAGUE API HAS EXPIRED!!'
+				]);	
+			}
+			
 		}
 
 		public function fetchSummoner($summonerEncrptedId)

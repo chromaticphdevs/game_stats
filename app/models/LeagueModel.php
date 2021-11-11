@@ -140,8 +140,13 @@
 			foreach($matches as $match) 
 			{
 				//means already exists
-				if( isEqual($match->metadata->matchId , $match_ids))
+				if( isEqual($match->metadata->matchId , $match_ids)){
+					dump([
+						$match_ids,
+						$match->metadata->matchId
+					]);
 					continue;
+				}
 
 				$metadata = $match->metadata;
 				$match_id = $metadata->matchId;
