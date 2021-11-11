@@ -165,7 +165,7 @@
 			{
 				$match = $this->cleanMatchData($match);
 
-				if( isEqual($match['match_id'] , $matches_ids) )
+				if( boolval($match['match_id']) ||  isEqual($match['match_id'] , $matches_ids) )
 					continue;
 
 				$isOk = parent::store([
