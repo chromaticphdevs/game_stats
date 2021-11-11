@@ -318,8 +318,7 @@
 
 			foreach($matches as $key => $match){
 				$match->info = json_decode($match->info);
-
-				if( is_null($match->info->picks_bans) )
+				if( !isset($match->info->picks_bans) || is_null($match->info->picks_bans))
 					unset($matches[$key]);
 			}
 
