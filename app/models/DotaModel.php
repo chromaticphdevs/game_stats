@@ -79,6 +79,7 @@
 		{
 			$endpoint = "http://cdn.dota2.com/apps/dota2/images/heroes/";
 
+			$hero_name = trim($hero_name);
 			$hero_name = str_replace("npc_dota_hero_" , '' , $hero_name);
 
 			return $endpoint.$hero_name.'_'.$prefix;
