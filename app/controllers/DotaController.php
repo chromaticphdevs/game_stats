@@ -39,17 +39,8 @@
 			$this->heroAbility = model('DotaHeroAbilitiesModel');
 			$abilities = $this->heroAbility->getAbilitiesByHero($heroName);
 
-
-
 			$abilitiesComplete = $abilityService->getByHeroAbilities($abilities[0]->abilities);
-
-			dump($abilitiesComplete);
 			
-
-			$dotaSkillBalancerModel = model('DotaSkillBalancerModel');
-
-			$dotaSkillBalancerModel->balanceSkills($abilitiesComplete);
-
 			$data = [
 				'hero' => $hero,
 				'title' => $hero->localized_name,
