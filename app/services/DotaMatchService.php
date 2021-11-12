@@ -46,16 +46,7 @@
 
 				if($saveMatch)
 					$counter++;
-
-				
 			}
-
-			// if( $match_details )
-			// {
-			// 	$dota = model('DotaModel');
-
-			// 	$dota->saveMatches($match_details);
-			// }
 		}
 
 		public function fetchProPlayers()
