@@ -6,13 +6,10 @@
 	{
 		public function index()
 		{
-
 			$leagueMatchService = new LeagueMatchService();
 			$leagueMatchService->populateMatches();
 
-
 			$dotaMatchService = new DotaMatchService();
 			$dotaMatchService->populateMatches();
-
 		}
 	}

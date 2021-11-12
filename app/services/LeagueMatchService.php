@@ -76,10 +76,7 @@
 				return $league[0];//first instance
 			}catch(Exception $e)
 			{
-				dump([
-					$e->getMessage(),
-					'LEAGUE API HAS EXPIRED!!'
-				]);	
+				
 			}
 			
 		}
