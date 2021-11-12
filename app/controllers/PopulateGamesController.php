@@ -19,8 +19,8 @@
 				Session::set('games_fetched' , 1);
 			}
 
-			$leagueMatchService = new LeagueMatchService();
-			$leagueMatchService->populateMatches();
+			// $leagueMatchService = new LeagueMatchService();
+			// $leagueMatchService->populateMatches();
 
 
 			$dotaMatchService = new DotaMatchService();

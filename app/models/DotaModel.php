@@ -165,7 +165,7 @@
 			{
 				$match = $this->cleanMatchData($match);
 
-				if( is_bool($match_id) )
+				if( is_bool($match) || is_null($match) )
 					continue;
 
 				if(isEqual($match['match_id'] , $matches_ids) )
