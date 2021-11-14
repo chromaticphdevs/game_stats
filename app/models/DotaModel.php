@@ -112,9 +112,7 @@
 
 			if( empty($games))
 				$games = Module::get('dota')['matchIds'];
-			
-
-
+				
 			$game_datas = [];
 
 			foreach($games as $key => $game_id)

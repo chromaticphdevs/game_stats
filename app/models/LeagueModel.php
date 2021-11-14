@@ -91,7 +91,7 @@
 		*responsible for pulling matches
 		*into the riot api and storing it to the database
 		*/
-		public function populateMatches( $matchIds = [])
+		public function 	( $matchIds = [])
 		{
 			$imported_games = 10;
 
