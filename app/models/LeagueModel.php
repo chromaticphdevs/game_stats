@@ -91,7 +91,7 @@
 		*responsible for pulling matches
 		*into the riot api and storing it to the database
 		*/
-		public function 	( $matchIds = [])
+		public function populateMatche	( $matchIds = [])
 		{
 			$imported_games = 10;
 
@@ -108,7 +108,7 @@
 
 				$url = "https://asia.api.riotgames.com/lol/match/v5/matches/{$id}?api_key={$apiKey}";
 
-				$matchData = api_call('GET' , $url , false);
+				$matchData = $this->apiGet($url);
 				
 				if( $matchData ){
 					$matches[] = $matchData;
@@ -120,15 +120,34 @@
 					break;
 			}
 
+			$this->saveMatches($matches);
+		}
+
+		public function saveMatches($matches)
+		{
+			if( empty($matches) )
+				return false;
+
+
+			$localized_matches = parent::dbgetAssoc('id');
+			//extrach matchids
+
+			$match_ids = [];
+			foreach($localized_matches as $match) {
+				array_push($match_ids , $match->match_id);
+			}
+
 			foreach($matches as $match) 
 			{
-				$matchData = json_decode($match);
-				
-				$metadata = $matchData->metadata;
+				//means already exists
+				if( isEqual($match->metadata->matchId , $match_ids))
+					continue;
+
+				$metadata = $match->metadata;
 				$match_id = $metadata->matchId;
 
 				$metadata = json_encode($metadata);
-				$info     = json_encode($matchData->info);
+				$info     = json_encode($match->info);
 
 				$this->db->query(
 					"INSERT INTO {$this->table}(match_id , meta_data , info )

@@ -120,19 +120,23 @@
 
 
 
-		public function loadApi()
+		public function loadApi( $type = 'API')
 		{
 			$url = $this->url;
+
+			$path = API;
+
+			if( isEqual($type , 'cron')) 
+				$path = APPROOT.DS.'cron';
+
 			if(isset($url[1])){
 
-				if(file_exists( API.DS.ucfirst($url[1]).'.php' )){
-
+				if(file_exists( $path.DS.ucfirst($url[1]).'.php' )){
 					$this->current_controller = ucfirst($url[1]);
 					unset($url[1]);
 				}
 
-
-				require_once(API.DS.$this->current_controller.'.php');
+				require_once($path.DS.$this->current_controller.'.php');
 
 				$this->current_controller = new $this->current_controller;
 			}
@@ -156,8 +160,8 @@
 		{
 			$url = $this->url;
 
-			if( isEqual($url[0] , 'API'))
-				return $this->loadApi();
+			if( isEqual($url[0] , ['API' , 'CRON']))
+				return $this->loadApi($url[0] );
 
 			if(isset($url[0])){
 

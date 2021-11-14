@@ -51,7 +51,7 @@
 						'type'  => 'nerf'
 					];
 				}else if(($winRateFiftyPercent && $pickRateLessSenventyPercent) || 
-				($pickRateLessTwentyPercent && $winRateEightyPercent))
+				($pickRateLessTwentyPercent && $winRateEightyPercent) || ($winRate < floatval(35)))
 				{
 					$revampParam = (object) [
 						'stats' => $this->buff($avatar->stats , $avatar->changes),

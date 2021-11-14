@@ -36,6 +36,7 @@
 			$hero = $this->dota->getLocalizeHeroes(['name' , $heroName] , $extractInfo = true);
 			$heroImage = $this->dota->getHeroImageUrl($heroName);
 
+			$this->heroAbility = model('DotaHeroAbilitiesModel');
 			$abilities = $this->heroAbility->getAbilitiesByHero($heroName);
 
 			$abilitiesComplete = $abilityService->getByHeroAbilities($abilities[0]->abilities);

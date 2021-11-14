@@ -39,7 +39,6 @@
             </div>
         </div>
     </div>
-
     <p class="text-center">
         Get to know heroes better
     </p>

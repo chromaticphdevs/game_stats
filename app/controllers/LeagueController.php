@@ -5,6 +5,8 @@
         public function __construct()
         {
             $this->league = model('LeagueModel');
+            $this->balancer = model('LeagueSkillBalancerModel');
+
         }
 
 
@@ -12,6 +14,8 @@
         {
             $champion = $this->league->getChampion($championName);
 
+            $this->balancer->balanceSkills($champion->$championName->spells , "NERF");
+            
             $data = [
                 'champion' => $champion->$championName,
                 'imgSrc'   => $this->league->image_link,
