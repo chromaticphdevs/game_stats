@@ -77,7 +77,7 @@
 		*/
 		public function getHeroImageUrl($hero_name , $prefix = 'full.png')
 		{
-			$endpoint = dotaApiWrapper("http://cdn.dota2.com/apps/dota2/images/heroes/");
+			$endpoint ="http://cdn.dota2.com/apps/dota2/images/heroes/";
 
 			$hero_name = trim($hero_name);
 			$hero_name = str_replace("npc_dota_hero_" , '' , $hero_name);
