@@ -1,4 +1,9 @@
 <?php
+
+    function dotaApiWrapper($api)
+    {
+        return $api."?api_key=1d9215ac-5294-457b-892a-c4ade1142fe8";
+    }
     function getMLAPI()
     {
         $db = Database::getInstance();

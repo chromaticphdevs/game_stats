@@ -20,7 +20,7 @@
 		{
 			$retVal = [];
 
-			$endpoint = 'https://api.opendota.com/api/heroes';
+			$endpoint = dotaApiWrapper('https://api.opendota.com/api/heroes');
 
 			$api_call_results = $this->apiGet($endpoint);
 			
