@@ -13,7 +13,8 @@
 						<?php
 							Form::text('key', '', [
 								'class' => 'form-control',
-								'placeholder' => 'Search Hero or Player Name'
+								'placeholder' => 'Search Hero or Player Name',
+								'require' => true
 							])
 						?>
 					</div>
@@ -21,7 +22,8 @@
 					<div class="col-md-2">
 						<?php
 							Form::select('regions' , $regions , '' , [
-								'class' => 'form-control'
+								'class' => 'form-control',
+								'require' => true
 							]);
 						?>
 					</div>

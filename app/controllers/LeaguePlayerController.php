@@ -25,9 +25,11 @@
             $data = [
                 'title' => 'Faker',
                 'hero_matches' => $hero_matches,
-                'matches'  => $hero_matches['matches'],
-                'matches_with_remarks' => $hero_matches['matches_with_remarks'],
-                'imgSrc' => 'http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/'
+                'matches'  => $hero_matches['matches'] ?? [],
+                'matches_with_remarks' => $hero_matches['matches_with_remarks'] ?? [],
+                'imgSrc' => 'http://ddragon.leagueoflegends.com/cdn/11.21.1/img/champion/',
+                'player' => $player,
+                'regions'    => $this->leaguePlayer->getRegions()
             ];
 
             return $this->view('league_player/index' , $data);

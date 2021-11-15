@@ -125,6 +125,8 @@
 
         public function matchesRemarks($param_matches , $puuid)
         {   
+            if(!$param_matches)
+                return false;
             /**
              * TEMPLATE
              * heroes = [

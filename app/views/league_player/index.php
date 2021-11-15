@@ -1,16 +1,58 @@
 <?php build('content') ?>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-content widget-content-area">
+            <small>Search Hero or Player</small>
+            <?php
+                Form::open([
+                    'method' => 'get',
+                    'action' => _route('leaguePlayer:search')
+                ])
+            ?>
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php
+                            Form::text('key', '', [
+                                'class' => 'form-control',
+                                'placeholder' => 'Search Hero or Player Name',
+                                'require' => true
+                            ])
+                        ?>
+                    </div>
+
+                    <div class="col-md-2">
+                        <?php
+                            Form::select('regions' , $regions , '' , [
+                                'class' => 'form-control',
+                                'require' => true
+                            ]);
+                        ?>
+                    </div>
+
+                    <div class="col-md-2">
+                        <?php
+                            Form::submit('' , 'Search' , [
+                                'class' => 'btn btn-primary btn-lg'
+                            ]);
+                        ?>
+                    </div>
+                </div>
+            <?php Form::close()?>
+        </div>
+    </div>
+
+    <?php divider()?>
+    
     <div class="row">
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <div class="media">
                         <div class="w-img">
-                            <img src="https://thumbs.dreamstime.com/b/businessman-vector-icon-avatar-sign-man-business-suit-male-face-flat-design-man-avatars-profile-concept-concept-boss-85517342.jpg" 
+                            <img src="<?php echo "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/{$player->profileIconId}.png"?>" 
                             alt="avatar" style="width:100%">
                         </div>
                         <div class="media-body">
-                            <h6>FAKER</h6>
-                            <p class="meta-date-time">Challenger</p>
+                            <h6><?php echo $player->name?></h6>
                         </div>
                     </div>
 
