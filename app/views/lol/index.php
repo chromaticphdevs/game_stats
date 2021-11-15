@@ -1,7 +1,7 @@
 <?php build('content')?>
 	<div class="statbox widget box box-shadow">
 		<div class="widget-content widget-content-area">
-			<small>Search Hero or Player</small>
+			<small>Search Player</small>
 			<?php
 				Form::open([
 					'method' => 'get',
@@ -13,7 +13,7 @@
 						<?php
 							Form::text('key', '', [
 								'class' => 'form-control',
-								'placeholder' => 'Search Hero or Player Name',
+								'placeholder' => 'Search Player Name',
 								'require' => true
 							])
 						?>

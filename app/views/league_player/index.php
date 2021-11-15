@@ -1,7 +1,7 @@
 <?php build('content') ?>
     <div class="statbox widget box box-shadow">
         <div class="widget-content widget-content-area">
-            <small>Search Hero or Player</small>
+            <small>Search Player</small>
             <?php
                 Form::open([
                     'method' => 'get',
@@ -13,7 +13,7 @@
                         <?php
                             Form::text('key', '', [
                                 'class' => 'form-control',
-                                'placeholder' => 'Search Hero or Player Name',
+                                'placeholder' => 'Search Player Name',
                                 'require' => true
                             ])
                         ?>
@@ -41,7 +41,7 @@
     </div>
 
     <?php divider()?>
-    
+
     <div class="row">
         <div class="col-md-4">
             <div class="card">
@@ -108,13 +108,17 @@
             <div class="table-responsive">
                 <table class="table table-bordered dataTable">
                     <thead>
+                        <th>#</th>
                         <th>HERO</th>
                         <th>KDA</th>
                     </thead>
 
                     <tbody>
+                        <?php $counter = 0?>
                         <?php foreach($matches as $match):?>
+                            <?php $counter++?>
                             <tr>
+                                <td><?php echo $counter?></td>
                                 <td>
                                     <div class="media">
                                         <div class="w-img">

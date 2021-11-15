@@ -36,7 +36,7 @@
             $endpoint = "https://{$region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{$name}?api_key={$this->_api_key}";
             $player = $this->apiGet($endpoint);
 
-            if( isset($player->status) )
+            if( isset($player->status) || is_null($player))
             {
                 $status_code = $player->status->status_code;
 
@@ -47,7 +47,7 @@
                     break;
 
                     default:
-                        $this->addError("Try to update your API KEY ");
+                        $this->addError("No user found or api key is expired");
                     break;
                 }
 
