@@ -101,9 +101,9 @@
 			return $matches;
 		}
 
-		public function fetchMatchDetails($matchId)
+		public function fetchMatchDetails($matchId , $region = 'asia')
 		{
-			$endpoint = "https://asia.api.riotgames.com/lol/match/v5/matches/{$matchId}?api_key={$this->_key}";
+			$endpoint = "https://{$region}.api.riotgames.com/lol/match/v5/matches/{$matchId}?api_key={$this->_key}";
 			$match = $this->apiGet($endpoint);
 
 			return $match;

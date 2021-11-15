@@ -1,4 +1,46 @@
 <?php build('content')?>
+	<div class="statbox widget box box-shadow">
+		<div class="widget-content widget-content-area">
+			<small>Search Hero or Player</small>
+			<?php
+				Form::open([
+					'method' => 'get',
+					'action' => _route('leaguePlayer:search')
+				])
+			?>
+				<div class="row">
+					<div class="col-md-8">
+						<?php
+							Form::text('key', '', [
+								'class' => 'form-control',
+								'placeholder' => 'Search Hero or Player Name'
+							])
+						?>
+					</div>
+
+					<div class="col-md-2">
+						<?php
+							Form::select('regions' , $regions , '' , [
+								'class' => 'form-control'
+							]);
+						?>
+					</div>
+
+					<div class="col-md-2">
+						<?php
+							Form::submit('' , 'Search' , [
+								'class' => 'btn btn-primary btn-lg'
+							]);
+						?>
+					</div>
+				</div>
+			<?php Form::close()?>
+		</div>
+	</div>
+	<?php divider()?>
+
+	<?php Flash::show()?>
+	
 	<div class="row">
 		<div class="col-md-7">
 			<div class="card">

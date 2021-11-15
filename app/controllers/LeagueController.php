@@ -7,6 +7,7 @@
             $this->league = model('LeagueModel');
             $this->balancer = model('LeagueSkillBalancerModel');
 
+            $this->player = model('LeaguePlayerModel');
         }
 
 
@@ -38,9 +39,10 @@
             $data = [
                 'topFivePopular' => $this->league->fetchTopChampions($matchesSummaries , 10),
                 'imageSrc'   => $this->league->image_link,
-                'champions'  => $champions
+                'champions'  => $champions,
+                'regions'    => $this->player->getRegions()
             ];
-
+            
             return $this->view('lol/index' , $data);
         }
     }
