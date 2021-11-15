@@ -51,7 +51,7 @@
 
 		public function fetchProPlayers()
 		{
-			$endpoint = "https://api.opendota.com/api/proPlayers";
+			$endpoint = dotaApiWrapper("https://api.opendota.com/api/proPlayers");
 			$pro_players = $this->apiGet($endpoint);
 
 			if(!$pro_players)
@@ -64,7 +64,7 @@
 		 * returns match_id->use to collect match details*/
 		public function fetchMatchesByPlayer($player_id)
 		{
-			$endpoint = "https://api.opendota.com/api/players/{$player_id}/matches";
+			$endpoint = dotaApiWrapper("https://api.opendota.com/api/players/{$player_id}/matches");
 			$matches = $this->apiGet($endpoint);
 
 			if(!$matches)
@@ -75,7 +75,7 @@
 
 		public function fetchMatchDetails($match_id)
 		{
-			$endpoint = "https://api.opendota.com/api/matches/{$match_id}";
+			$endpoint = dotaApiWrapper("https://api.opendota.com/api/matches/{$match_id}");
 			$match = $this->apiGet($endpoint);
 
 			if(!$match)

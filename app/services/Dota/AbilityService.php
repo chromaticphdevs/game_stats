@@ -11,7 +11,7 @@
 		*/
 		public function getByHeroAbilities($heroAbilities = [])
 		{
-			$endpoint = 'https://api.opendota.com/api/constants/abilities';
+			$endpoint = dotaApiWrapper('https://api.opendota.com/api/constants/abilities');
 
 			$abilities = $this->apiGet($endpoint);
 

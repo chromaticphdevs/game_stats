@@ -77,7 +77,7 @@
 		*/
 		public function getHeroImageUrl($hero_name , $prefix = 'full.png')
 		{
-			$endpoint = "http://cdn.dota2.com/apps/dota2/images/heroes/";
+			$endpoint = dotaApiWrapper("http://cdn.dota2.com/apps/dota2/images/heroes/");
 
 			$hero_name = trim($hero_name);
 			$hero_name = str_replace("npc_dota_hero_" , '' , $hero_name);
@@ -88,7 +88,7 @@
 
 		public function localizeHeroStats()
 		{
-			$endpoint = 'https://api.opendota.com/api/heroStats';
+			$endpoint = dotaApiWrapper('https://api.opendota.com/api/heroStats');
 
 			$results = $this->apiGet($endpoint);
 
@@ -112,7 +112,7 @@
 		*/
 		public function localizeGames( $games = [] )
 		{
-			$endpoint = 'https://api.opendota.com/api/matches';
+			$endpoint = dotaApiWrapper('https://api.opendota.com/api/matches');
 
 			if( empty($games))
 				$games = Module::get('dota')['matchIds'];
@@ -194,7 +194,7 @@
 
 			foreach( $players as $player )
 			{
-				$matches = $this->apiGet("https://api.opendota.com/api/players/{$player}/matches");
+				$matches = $this->apiGet(dotaApiWrapper("https://api.opendota.com/api/players/{$player}/matches"));
 
 				if( $fetchedGames >= 25)
 					break;
