@@ -36,7 +36,14 @@
             $endpoint = "https://{$region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{$name}?api_key={$this->_api_key}";
             $player = $this->apiGet($endpoint);
 
-            if( isset($player->status) || is_null($player))
+
+            if( is_null($player) )
+            {
+                $this->addError("User not found in any servers");
+                return false;
+            }
+            
+            if( isset($player->status) )
             {
                 $status_code = $player->status->status_code;
 
