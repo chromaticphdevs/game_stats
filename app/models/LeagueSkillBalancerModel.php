@@ -51,7 +51,7 @@
             {
                 $convert_revamp = $effect[$i] * $percentage;
                 
-                if( $nerf_or_buff == 'NERF' ){
+                if( isEqual($nerf_or_buff , 'nerf') ){
                     array_push($retval , round( $effect[$i] -= $convert_revamp ,2));
                 }else{
                     array_push($retval , round($effect[$i] += $convert_revamp,2));
@@ -64,14 +64,14 @@
         public function costRevamp($cost , $maxrank , $nerf_or_buff)
         {
             $retval = [];
-            $data_deduct = mt_rand(1 , 4);
+            $data_deduct = mt_rand(2 , 4);
 
             for($i = 0 ; $i < $maxrank ; $i++) 
             {
-                if( $nerf_or_buff == 'NERF' ){
-                    array_push($retval , round( $cost[$i] += $data_deduct ,1));
+                if( isEqual($nerf_or_buff , 'nerf') ){
+                    array_push($retval , $cost[$i] += $data_deduct);
                 }else{
-                    array_push($retval , round($cost[$i] -= $data_deduct,1));
+                    array_push($retval , $cost[$i] -= $data_deduct);
                 }
             }
 
@@ -82,23 +82,23 @@
         {
             $retval = [];
             
-            $data_deduct = mt_rand(1 , 10);
+            $data_deduct = mt_rand(2 , 4);
             $percentage = 0;
 
-            if( $data_deduct < 9 ){
-                $percentage = floatval("0.0{$data_deduct}");
-            }else{
-                $percentage = intval(0.10);//10 percent
-            }
+            // if( $data_deduct < 9 ){
+            //     $percentage = floatval("0.0{$data_deduct}");
+            // }else{
+            //     $percentage = intval(0.10);//10 percent
+            // }
 
             for($i = 0 ; $i < $maxrank ; $i++) 
             {
-                $convert_revamp = $cooldown[$i] * $percentage;
+                // $convert_revamp = $cooldown[$i] * $percentage;
 
-                if( $nerf_or_buff == 'NERF' ){
-                    array_push($retval , round( $cooldown[$i] += $convert_revamp ,1));
+                if( isEqual($nerf_or_buff , 'nerf') ){
+                    array_push($retval , $cooldown[$i] += $data_deduct);
                 }else{
-                    array_push($retval , round($cooldown[$i] -= $convert_revamp,1));
+                    array_push($retval , $cooldown[$i] -= $data_deduct);
                 }
             }
 
