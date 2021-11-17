@@ -25,6 +25,18 @@
     <link rel="stylesheet" type="text/css" href="<?php echo _path_tmp('plugins/table/datatable/datatables.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo _path_tmp('plugins/table/datatable/dt-global_style.css')?>">
 
+    <style>
+        #id_reset_countdown{
+            box-sizing: border-box;
+            /* background-color: #1b55e2; */
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            
+            padding: 5px 0px;
+        }
+    </style>
     <?php produce('headers')?>
     <?php produce('styles')?>
     <!-- END PAGE LEVEL STYLES -->
@@ -40,6 +52,13 @@
     <!--  BEGIN NAVBAR  -->
     <div class="header-container">
         <?php grab('partial/navigation_header')?>
+        <?php $recent_reset_date = date(getRecentGameResetDate())?> 
+        <div class="container">
+        <div id="id_reset_countdown">
+            <h5>Countdown before reset <span id="id_reset_countdown_counter"><?php echo $recent_reset_date?></span></h5>
+            <input type="hidden" value="<?php echo $recent_reset_date?>" id="recent_reset_date">
+        </div>
+        </div>
         <?php grab('partial/navigation_main')?>
     </div>
     <!--  END NAVBAR  -->
@@ -85,6 +104,43 @@
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="<?php echo _path_tmp('assets/js/libs/jquery-3.1.1.min.js')?>"></script>
+
+    <script>
+        $( document ).ready( function() {
+            
+            var $recent_reset_date = $("#recent_reset_date");
+
+            var countDownDate = new Date($recent_reset_date.val())
+
+            countDownDate.setDate( countDownDate.getDate() + 12 );
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+                
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+            // Output the result in an element with id="demo"
+            document.getElementById("id_reset_countdown_counter").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+                
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("id_reset_countdown_counter").innerHTML = "EXPIRED";
+            }
+            }, 1000);
+        });
+    </script>
+
     <script src="<?php echo _path_tmp('bootstrap/js/popper.min.js')?>"></script>
     <script src="<?php echo _path_tmp('bootstrap/js/bootstrap.min.js')?>"></script>
     <script src="<?php echo _path_tmp('plugins/perfect-scrollbar/perfect-scrollbar.min.js')?>"></script>
@@ -117,5 +173,7 @@
     <script src="<?php echo _path_tmp('assets/js/dashboard/dash_2.js')?>"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <?php produce('scripts')?>
+
+    
 </body>
 </html>

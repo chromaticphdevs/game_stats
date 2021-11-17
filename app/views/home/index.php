@@ -42,6 +42,10 @@
     <p class="text-center">
         Get to know heroes better
     </p>
+    
+
+    
 <?php endbuild()?>
+
 
 <?php loadTo('tmp/base')?>

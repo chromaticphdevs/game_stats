@@ -12,8 +12,8 @@
 			$leagueMatchService->populateMatches();
 
 
-			$dotaMatchService = new DotaMatchService();
-			$dotaMatchService->populateMatches();
+			// $dotaMatchService = new DotaMatchService();
+			// $dotaMatchService->populateMatches();
 		}
 
 		private function postGameFetchAndPossibleReset()

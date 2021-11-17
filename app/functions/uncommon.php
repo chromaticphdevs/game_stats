@@ -1,5 +1,17 @@
 <?php
 
+    function getRecentGameResetDate()
+    {
+        $db = Database::getInstance();
+
+        $db->query(
+            "SELECT * FROM fetch_game_logs
+                ORDER BY id DESC"
+        );
+
+        return $db->single()->recent_reset;
+    }
+
     function dotaApiWrapper($api)
     {
         return $api."?api_key=1d9215ac-5294-457b-892a-c4ade1142fe8";
@@ -31,7 +43,7 @@
     {
         Session::set('auth' , $data);
 
-        return true;
+        return Session::get('auth');
     }
 
     function whoIs($prop = null)
