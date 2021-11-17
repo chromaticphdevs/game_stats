@@ -5,6 +5,11 @@
 		public function __construct()
 		{
 			$this->apiKey = model('ApiKeyModel');
+
+			if( ! auth() ){
+				Flash::set("Try to re-login" , 'warning');
+				return redirect(_route('login:index'));
+			}
 		}
 
 		public function edit()
