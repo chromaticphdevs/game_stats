@@ -8,8 +8,8 @@
 		{
 			$this->postGameFetchAndPossibleReset();
 
-			$leagueMatchService = new LeagueMatchService();
-			$leagueMatchService->populateMatches();
+			// $leagueMatchService = new LeagueMatchService();
+			// $leagueMatchService->populateMatches();
 
 
 			// $dotaMatchService = new DotaMatchService();
