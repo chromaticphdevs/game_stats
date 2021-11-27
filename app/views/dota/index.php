@@ -1,4 +1,7 @@
 <?php build('content')?>
+	<?php grab('partial/dota_player_search')?>
+	<?php Flash::show()?>
+
 	<div class="row">
 		<div class="col-md-7">
 			<div class="card">

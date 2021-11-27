@@ -41,6 +41,13 @@
 		'search' => $controller .'/search'
 	];
 
+	$controller = '/DotaPlayerController';
+
+	$routes['dotaplayer'] = [
+		'search' => $controller .'/search',
+		'show' => $controller .'/show',
+	];
+
 	$controller = '/DotaController';
 
 	$routes['dota'] = [
