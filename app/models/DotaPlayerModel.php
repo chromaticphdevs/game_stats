@@ -13,8 +13,8 @@
 
             $users = $this->apiGet( dotaApiWrapper("https://api.opendota.com/api/search?q={$key}") );
             
-            if( isset($users['error']) ){
-                $this->addError($users['error']);
+            if( isset($users->error) ){
+                $this->addError($users->error);
                 return false;
             };
 
