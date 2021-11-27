@@ -16,9 +16,9 @@
                 Flash::set("No user found!" , 'warning');
                 return request()->return();
             }else{
-                Flash::set( count($users) . " Users found with name '{$q['key']}' ");
+                Flash::set( count($users ?? []) . " Users found with name '{$q['key']}' ");
             }
-            
+
             $data = [
                 'title' => 'Dota Players',
                 'users' => $users

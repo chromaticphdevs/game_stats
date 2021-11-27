@@ -13,10 +13,17 @@
 
             $users = $this->apiGet( dotaApiWrapper("https://api.opendota.com/api/search?q={$key}") );
 
+            dump($users);
+            
             if(!$users)
                 return false;
 
             $users = $this->sortSimilarity($users);
+
+            
+
+            dump($users);
+
             return $users;
         }
 
