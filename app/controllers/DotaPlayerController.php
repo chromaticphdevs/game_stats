@@ -13,7 +13,7 @@
             $users = $this->model->fetchUsers($q['key']);
 
             if(!$users) {
-                Flash::set("No user found!" , 'warning');
+                Flash::set($this->model->getErrorString() , 'warning');
                 return request()->return();
             }else{
                 Flash::set( count($users ?? []) . " Users found with name '{$q['key']}' ");

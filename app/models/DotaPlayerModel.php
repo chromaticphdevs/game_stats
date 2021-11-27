@@ -18,8 +18,11 @@
                 return false;
             };
 
-            if( !$users )
+            if( !$users ){
+                $this->addError("NO users found");
                 return false;
+            }
+                
                 
             $users = $this->sortSimilarity($users);
 
